@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\divisi;
 use Illuminate\Http\Request;
 
 class UsersController extends Controller
@@ -25,7 +26,8 @@ class UsersController extends Controller
      */
     public function create()
     {
-        //
+        $divisi = divisi::all();
+        return view('users.create', compact('divisi'));
     }
 
     /**
@@ -36,7 +38,17 @@ class UsersController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
+        $request->validate([
+            'nama'=>'required',
+            'alamat'=>'required',
+            'tahun_masuk'=>'required',
+            'divisi_id'=>'required'
+        ]);
+
+        User::create($request->all());
+
+        return redirect('/user')->with('status','Berhasil Menambahkan Data User');
     }
 
     /**
@@ -58,7 +70,8 @@ class UsersController extends Controller
      */
     public function edit(User $user)
     {
-        //
+        $divisi = divisi::all();
+        return view('users.edit', compact('user','divisi'));
     }
 
     /**
@@ -70,7 +83,22 @@ class UsersController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        //
+        $request->validate([
+            'nama'=>'required',
+            'alamat'=>'required',
+            'tahun_masuk'=>'required',
+            'divisi_id'=>'required'
+        ]);
+
+        User::where('id', $user->id)
+                ->update([
+                    'nama' =>$request->nama,
+                    'alamat'=>$request->alamat,
+                    'tahun_masuk'=>$request->tahun_masuk,
+                    'divisi_id'=>$request->divisi_id
+                ]);
+
+                return redirect('/users')->with('status','Berhasil Mengubah Data User');
     }
 
     /**
@@ -81,6 +109,7 @@ class UsersController extends Controller
      */
     public function destroy(User $user)
     {
-        //
+        User::destroy($user->id);
+        return redirect('/users')->with('status','Berhasil Di Hapus');
     }
 }

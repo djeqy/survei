@@ -11,6 +11,10 @@ class User extends Model
     protected $table='user';
     protected $id='id';
     protected $fillable=[
-        'nama','alamat','tahun masuk','divisi_id'
+        'nama','alamat','tahun_masuk','divisi_id'
     ];
+    public function divisi()
+    {
+        return $this->belongsTo(divisi::class, 'divisi_id');
+    }
 }
