@@ -48,7 +48,7 @@ class UsersController extends Controller
 
         User::create($request->all());
 
-        return redirect('/user')->with('status','Berhasil Menambahkan Data User');
+        return redirect('/users')->with('status','Berhasil Menambahkan Data User');
     }
 
     /**
