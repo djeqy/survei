@@ -19,6 +19,7 @@
         @method('delete')
         @csrf
     <button type="delete" class="btn btn-danger">DELETE</button>
+    <a href="/users" class="btn btn-primary">BACK</a>
     </form>
     </div>
     </div>
